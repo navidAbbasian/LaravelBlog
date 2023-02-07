@@ -1,16 +1,18 @@
 @props(['comment'])
-
-<article class="flex bg-gray-100 border border-gray-200 rounded-xl p-6 space-x-4">
-    <div class="flex-shrink-0">
-        <img src="https://i.pravatar.cc/60?id={{$comment->id}}" alt="" height="60" width="60" class="rounded">
-    </div>
-    <div>
-        <header mb-4>
-            <h3 class="font-bold">{{$comment->author->username}}</h3>
+<x-panel class="bg-gray-50">
+    <article class="flex space-x-4">
+        <div class="flex-shrink-0">
+            <img src="https://i.pravatar.cc/60?id={{$comment->id}}" alt="" height="60" width="60" class="rounded">
+        </div>
+        <div>
+            <header mb-4>
+                <h3 class="font-bold">{{$comment->author->username}}</h3>
                 <p class="text-xs">
-                    Posted <time>{{$comment->created_at}}</time>
+                    Posted
+                    <time>{{$comment->created_at}}</time>
                 </p>
-        </header>
+            </header>
             <p class="mt-4"> {{$comment->body}} </p>
-    </div>
-</article>
+        </div>
+    </article>
+</x-panel>
