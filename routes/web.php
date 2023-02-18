@@ -12,6 +12,23 @@ use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\SessionsController;
 use App\Http\Controllers\PostCommentController;
 
+Route::post('newsletter',function (){
+    //until video no60
+//    request()->validate([
+//        'email'=> 'require|email'
+//    ]);
+//    try {
+//        $newsletter = new \App\Services\Newsletter();
+//    $newsletter->subscribe(request('email'));
+//    } catch (Exception $e){
+//        throw \Illuminate\Validation\ValidationException::withMessages('error messeage');
+//    }
+//    ddd($response);
+
+    return redirect('/')->with('success','Coming Soon We will fix it');
+});
+
+
 Route::get('/', [PostController::class, 'index'])->name('home');
 
 Route::get('posts/{post:slug}',[PostController::class, 'show'] );
