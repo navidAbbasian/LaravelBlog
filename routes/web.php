@@ -24,34 +24,7 @@ Route::get('login' , [SessionsController::class, 'create'])->middleware('guest')
 Route::Post('login' , [SessionsController::class, 'store'])->middleware('guest');
 Route::post('logout' , [SessionsController::class, 'destroy'])->middleware('auth');
 
-Route::get('admin/posts/create', [PostController::class, 'create']);
+Route::get('admin/posts/create', [PostController::class, 'create'])->middleware('admin');
 Route::post('admin/posts', [PostController::class, 'store']);
 
-Route::get('test', function (){
-    dd('test');
-});
-
-
-
-
-
-
-
-
-
-
-Route::post('newsletter',function (){
-    //until video no60
-//    request()->validate([
-//        'email'=> 'require|email'
-//    ]);
-//    try {
-//        $newsletter = new \App\Services\Newsletter();
-//    $newsletter->subscribe(request('email'));
-//    } catch (Exception $e){
-//        throw \Illuminate\Validation\ValidationException::withMessages('error messeage');
-//    }
-//    ddd($response);
-
-    return redirect('/')->with('success','Coming Soon We will fix it');
-});
+Route::post('newsletter',function (){return redirect('/')->with('success','Coming Soon We will fix it');});

@@ -38,7 +38,6 @@ class PostController extends Controller
             'body'=>'required',
             'category_id'=>['required', Rule::exists('categories', 'id')]
         ]);
-
         $attribiutes['user_id']=auth()->id();
 
         Post::create($attribiutes);
