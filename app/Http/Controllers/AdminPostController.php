@@ -23,17 +23,9 @@ class AdminPostController extends Controller
     }
     public function store()
     {
-
-        $attribiutes=request()->validate([
-            'title'=>'required',
-            'slug'=>['required',Rule::unique('posts','slug')],
-            'thumbnail'=>'image',
-            'excerpt'=>'required',
-            'body'=>'required',
-            'category_id'=>['required', Rule::exists('categories', 'id')]
-        ]);
-        $attribiutes['user_id']=auth()->id();
-        Post::create($attribiutes);
+        Post::create(array_merge($this->groupValidate(),[
+           'user_id' => request()->user()->id,
+        ]));
 
         return redirect('/');
     }
@@ -43,22 +35,27 @@ class AdminPostController extends Controller
     }
     public function update(Post $post)
     {
-        $attribiutes=request()->validate([
-            'title'=>'required',
-            'slug'=>['required',Rule::unique('posts','slug')->ignore($post->id)],
-            'thumbnail'=>'image',
-            'excerpt'=>'required',
-            'body'=>'required',
-            'category_id'=>['required', Rule::exists('categories', 'id')]
-        ]);
-        //if (isset($attribiutes['thumbnail'])){
-            //$attribiutes['thumbnail'] = \request()->file('thumbnail')->store('thumbnails');        }
-        $post->update($attribiutes);
+
+        $post->update($this->groupValidate($post));
         return back()->with('success, post Updated');
     }
     public function destroy(Post $post)
     {
         $post->delete();
         return back()->with('success, post Deleted');
+    }
+    public function groupValidate(?Post $post = null) :array
+    {
+        $post ??= new Post();
+        return request()->validate([
+            'title'=>'required',
+            'slug'=>['required',Rule::unique('posts','slug')->ignore($post)],
+            'thumbnail'=>'image',
+            'excerpt'=>'required',
+            'body'=>'required',
+            'category_id'=>['required', Rule::exists('categories', 'id')]
+            //if (isset($attribiutes['thumbnail'])){
+            //$attribiutes['thumbnail'] = \request()->file('thumbnail')->store('thumbnails');        }
+        ]);
     }
 }
